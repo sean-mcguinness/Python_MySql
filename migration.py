@@ -55,7 +55,6 @@ def main(dict_manual_edit):
         answer = input("Skript manuell bearbeitet? [J/N] ")
 
         if answer.upper() == 'J':
-
             # Prueft die Manuellen anpassungen im Skript(Sind alle Pflichtvariablen definiert?)
             def check_params(dict_manual_edit):
                 for nested_dicts in dict_manual_edit.values():
@@ -129,10 +128,8 @@ def interactive_edit():
                 do_loop1 = False
                 ia_destination_table = input("Zieltabelle: ")
                 dict_db_ia_edit["destination_table"] = ia_destination_table
-
             elif ask_use_other_dest_tbl.upper() == "N":
                 do_loop1 = False
-
             else:
                 print("Ungültige Eingabe!")
 
@@ -144,10 +141,8 @@ def interactive_edit():
                 do_loop2 = False
                 ia_destination_street_attribute = input("Zielattribut für Strasse: ")
                 dict_db_ia_edit["destination_street_attribute"] = ia_destination_street_attribute
-
             elif ask_use_other_str_dest.upper() == "N":
                 do_loop2 = False
-
             else:
                 print("Ungültige Eingabe!")
         ask_use_separator = input("Anderen Separator als default verwenden? (default = " ") [J/N]")
@@ -202,7 +197,6 @@ def split_street_houseNr_in_db(db_connection,
 
     # Fuellt Liste mit Daten
     for i in range(len(mein_resultat)):
-        # TODO Anzahl splits?
         street_houseNr += mein_resultat[i][source_attribute].rsplit(" " if separator is None else separator, 1)
 
     # Teilt Daten in 2 Listen
@@ -210,7 +204,6 @@ def split_street_houseNr_in_db(db_connection,
 
     # Generiert UPDATE Statements fuer jeden Datensatz
     for x in range(0, len(mein_resultat)):
-
         stm_update = f"UPDATE {destination_table} \
                         SET {destination_street_attribute}= \
                         \"{dict_split_street_houseNr['streets'][x]}\", \
@@ -218,7 +211,6 @@ def split_street_houseNr_in_db(db_connection,
                         WHERE id={x+1};"
 
         print(f"Wird ausgefuehrt: {stm_update}")
-
         mein_cursor.execute(stm_update)
 
 
@@ -233,4 +225,3 @@ def split_street_houseNr_in_string(street_houseNr):
 
 # Startet das Skript
 main(dict_manual_edit)
-
